@@ -1,0 +1,23 @@
+
+<div class="today"><b>Today is: WUIHAFWÖUHAWF</b></div>
+<div class="day">
+    <nav ng-repeat="hour in hours" class="calendar">
+        <ul>
+            <li class="task-label">{{$index+1}}</li>
+            
+            <li class="task" ng-repeat="task in hour" ng-click="deletePost(hour,task,$index)">
+                {{task.task}}
+            </li>
+            <li class="cursor task">
+                <form class="post-form" ng-submit="addPost($index+1)" ng-show="addtask">
+                    <input name="task" type="text" placeholder="task" ng-model="form.task" autofocus="" />
+                    
+                    <button type="submit" class="button button-ok" ng-click="addtask = false">Post</button>
+                    <div class="button button-cancel" ng-click="addtask = false">Cancel</div>
+                    <div style="clear:both"></div>
+                </form>
+                <div class="addtask" ng-click="addtask = true" ng-show="!addtask">Add</div>
+            </li>
+        </ul>
+    </div>
+</div>
