@@ -1,95 +1,233 @@
 .wrapper
-    position relative
-    width 100%
-    height 100%
-    overflow auto
-    &:after
-        content ''
-        display block
-        clear both
+  position relative
+  width 100%
+  height 100%
+  border-radius 10px
+  &:after
+    content ''
+    display block
+    clear both
+
+.side-top, .side-middle, .side-bottom, .maincontent
+  box-shadow 0 0 50px black
+
+.side-top, .side-middle, .side-bottom
+  border-bottom 1px solid rgba(0,0,0,.0)
+  border-right 1px solid rgba(0,0,0,.0)
+  background-clip content-box
+
+.side-top, .side-bottom, .maincontent, .main-bottom
+  & > .canvas
+    box-shadow inset 0px 3px 3px -3px #fff
 
 .sidepanel
-    width 20%
-    height 100%
-    float left
-    background #222
-    color #fefefe
-    padding 5px
-    position relative
-    & a
-        color #fefefe
-    & li .button
-        width 100%
-    
+  width 580px
+  height 100%
+  float left
+  position relative
+  & .side-top
+    height 15%
+    width 100%
+    border-top-left-radius 10px
+    border-top-right-radius 10px
+    & .canvas
+      border-top-left-radius 10px
+      border-top-right-radius 10px
+      background #f16767
+      &:before
+        content ''
+        display block
+        height 33.3333%
+    & .top
+      height 66.6666%
+  & .side-middle
+    height 70%
+    width 100%
+    & .canvas
+      background #f8cb6e
+    & .calendar
+      height 100%
+      overflow-x hidden
+    & .month-select
+      height calc( 100% / 7 )
+      color #efefef
+      background rgba(255,255,255,.1)
+      & *
+        user-select none
+      &:hover
+        color #fff
+      & nav
+        height 100%
+      & .month-label
+        height 100%
+        text-align center
+        font-size 36px
+      & .month-previous
+        position absolute
+        left 0px
+        top 33.3%
+        width 50%
+        height 33.3%
+        z-index 2
+      & .month-next
+        position absolute
+        right 0px
+        top 33.3%
+        width 50%
+        height 33.3%
+        z-index 2
+    & .day-select
+      overflow-x hidden
+      height calc( ( 100% / 7 ) * 6 )
+      color #efefef
+      padding 15px
+      overflow hidden
+      & *
+        user-select none
+      & nav, ul
+        height 100%
+      & li
+        display inline-block
+        width 25%
+        text-align center
+        padding 0 3px
+        height 11.25%
+        color #222
+        background rgba(255,255,255,.3)
+        background-clip content-box
+        overflow hidden
+  & .side-bottom
+    height 15%
+    width 100%
+    border-bottom 0px !important
+    border-bottom-left-radius 10px
+    border-bottom-right-radius 10px
+    & .canvas
+      border-bottom-left-radius 10px
+      border-bottom-right-radius 10px
+      background #64d4f9
+
+.canvas
+  width 100%
+  height 100%
+  left 0
+  top 0
+  z-index 1
+  position absolute
+
 .maincontent
-    width 80%
-    height 100%
-    overflow-y auto
-    float left
-    
-    background #ebe9eb
+  width calc( 100% - 580px )
+  height 100%
+  float left
+  border-radius 10px
+  & > .canvas
+    overflow hidden
+    border-radius 10px
+    background rgba(255,255,255,.3)
+    &:before
+        content ''
+        display block
+        height 5%
+  & .main-bottom
+    position absolute
+    bottom 0px
+    height 15%
+    width 100%
+    left 0px
+    background rgba(255,255,255,.3)
+    border-bottom-left-radius 10px
+    border-bottom-right-radius 10px
+    overflow hidden
+    &:after
+      content ''
+      display block
+      clear both
+    & .left-info
+      width 60%
+      height 100%
+      float left
+    & .right-buttons
+      width 40%
+      display table
+      table-layout fixed
+      height 100%
+      text-align center
+      overflow hidden
+      float left
+      & > ul
+        margin 0
+        padding 0
+        display table-row
+        min-height 100%
+        position relative
+        & > li
+          list-style none
+          display table-cell
+          background rgba(100,212,249,0.6)
+          // &:nth-child(2)
+          &:hover
+            background rgba(100,212,249,0.9)
+
+
+
+
 
 .listwrap
-    width 100%
-    padding 10px 10px 10px 0
-    height 100%
-    
-.day
-    width 100%
-    text-align center
+  width 100%
+  padding 10px 10px 10px 0
+  height 100%
+
 .today
-    width 80%
-    margin 0 auto
-    font-size 40px
-    line-height 70px
-    color #888
-.hour
-    display inline-block
-    width 80%
-    text-align left
-    margin-bottom 20px
-    &:after
-        display block
-        content ''
-        clear both
+  width 100%
+  margin 0 auto
+  font-size 40px
+  line-height 70px
+  padding-left 10%
+  height 10%
+  color #fff
 .task-label
-    width 70px
-    text-align center
-    color #00f
-    font-size 36px
+  height 100%
+  width 70px
+  text-align center
+  font-size 36px
+  display inherit
+  vertical-align middle
 .task
-    text-align left
-    border 1px solid #e0e0e0
-    padding 15px
-    border-radius 4px
+  text-align left
+  padding 15px
+  border-radius 4px
+  overflow hidden
+  &:hover .remove
+    position absolute
+    top 0px
+    right 0px
+    width 32px
+    height 32px
+    background red
 .addtask
-    width 100px
-    text-align center
-    color green
-    
-nav.calendar
+  width 100px
+  text-align center
+  color green
+  height 100%
+
+nav.hour
   width 100%
   display table
-  height auto
   table-layout fixed
-  min-height 60px
+  min-height 10%
+  text-align center
+  overflow hidden
   & > ul
     margin 0
     padding 0
     display table-row
     min-height 100%
+    position relative
     & > li
-      list-style none1
-      cursor pointer
-      text-align center
-      line-height 60px
+      list-style none
       display table-cell
-      &:first-child
-        border-left none
-      & > a
-        display block
-        text-decoration none
-        color black
-        line-height 50px
-      &.active > a
-        color #00f
+
+
+
+
+

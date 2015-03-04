@@ -24,11 +24,74 @@
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
     <!-- Add your site or application content here -->
     <div class="wrapper">
-      <div ng-include src="'views/sidepanel.html'" ng-controller="sidepanelCtrl" class="sidepanel"></div>
-      <div class="maincontent" ui-view=""></div>
+      <div class="sidepanel">
+        <div class="side-top">
+            <div class="canvas">
+                <div class="top">
+                </div>
+            </div>
+        </div>
+        <div class="side-middle">
+            <div class="canvas calendar">
+                <ng-month-select>
+                    <ul>
+                        <li ng-repeat="month in months">
+                            <div class="month-select separator-bottom">
+                                <div class="cursor month-previous" ng-click="previousMonth()" ng-show="month === months[currentmonth]">
+                                    <svg class="arrow arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 306" >
+                                        <g><polygon points="94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153"/></g>
+                                    </svg>
+                                </div>
+                                <div class="month-label">
+                                    <div class="valign">
+                                        <div class="middle">{{month.name}}</div>
+                                    </div>
+                                </div>
+                                <div class="cursor month-next" ng-click="nextMonth()" ng-show="month === months[currentmonth]">
+                                    <svg  class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 306" >
+                                        <g><polygon points="94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153"/></g>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="day-select" ng-show="month === months[currentmonth]">
+                                <ng-day-select>
+                                    <ul>
+                                        <li ng-repeat="day in month.days track by $index"
+                                            ui-sref="day({year: '2015', month:month.id, day: $index+1})"
+                                            class="cursor">
+                                            <div class="valign">
+                                                <div class="middle">{{$index+1}}</div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </ng-day-select>
+                            </div>
+                        </li>
+                    </ul>
+                </ng-month-select>
+            </div>
+        </div>
+        <div class="side-bottom">
+            <div class="canvas"></div>
+        </div>
+      </div>
+      <div class="maincontent">
+            <div class="canvas" ui-view=""></div>
+            <div class="main-bottom">
+                <div class="canvas">
+                    <div class="left-info">
+                    </div>
+                    <div class="right-buttons">
+                        <ul>
+                            <li>1</li>
+                            <li class="separator-left">2</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+      </div>
     </div>
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -65,16 +128,18 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
-        
-        <script src="scripts/controllers/sidepanel.js"></script>
-        <script src="scripts/controllers/list.js"></script>
-        
+
+        <script src="scripts/controllers/day.js"></script>
+
+        <script src="scripts/directives/monthselect.js"></script>
+        <script src="scripts/directives/dayselect.js"></script>
+
         <script src="scripts/services/socket.js"></script>
         <script src="scripts/services/posts.js"></script>
         <script src="scripts/services/scroll.js"></script>
-        
+
         <script src="scripts/filters/slug.js"></script>
-        
+
         <!-- endbuild -->
         <script src="/socket.io/socket.io.js"></script>
 

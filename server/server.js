@@ -4,7 +4,7 @@
   var express        = require('express');
   var fs             = require('fs');
   var app            = express();
-  var ip             = process.env.IP || '0.0.0.0';
+  var ip             = process.env.IP || 'localhost';
   var port           = process.env.PORT || 8080;
   var env            = process.env.NODE_ENV || 'development';
   var server         = require('http').createServer(app);

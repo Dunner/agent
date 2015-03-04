@@ -16,12 +16,12 @@ angular
     'ngResource',
     'ngSanitize',
     'ngTouch',
-    
+
     'btford.socket-io'
   ])
   .run(   ['$rootScope', '$state', '$window',
   function ($rootScope,   $state,   $window) {
-  
+
     //Statechange
     $rootScope.$on('$stateChangeStart', function () {
       $window.scrollTo(0, 0);
@@ -33,7 +33,7 @@ angular
     $rootScope.$on('$stateChangeError', function () {
       console.log('STATE CHANGE ERROR');
     });
-    
+
   }])
   .config(['$locationProvider', '$stateProvider', '$urlRouterProvider', '$httpProvider',
   function ($locationProvider,   $stateProvider,   $urlRouterProvider,   $httpProvider) {
@@ -41,13 +41,16 @@ angular
     $httpProvider.defaults.withCredentials = true;
 
     $stateProvider
-    
-      .state('list', {
+
+      .state('welcome', {
         url: '/',
-        templateUrl: 'views/list.html',
-        controller: 'listCtrl'
+        templateUrl: 'views/welcome.html'
+      })
+      .state('day', {
+        url: '{year}/{month}/{day}',
+        templateUrl: 'views/day.html',
+        controller: 'dayCtrl'
       });
-      
     $urlRouterProvider.otherwise('/');
     $locationProvider.html5Mode(true);
     $locationProvider.hashPrefix('!');

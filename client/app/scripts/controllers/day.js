@@ -2,24 +2,40 @@
 
 /**
  * @ngdoc function
- * @name postApp.controller:listCtrl
+ * @name postApp.controller:dayCtrl
  * @description
- * # listCtrl
+ * # dayCtrl
  * Controller of the postApp
  */
 angular.module('postApp')
-  .controller('listCtrl', function ($scope, $filter, Posts) {
-    
+  .controller('dayCtrl', function ($scope, $filter, $stateParams, Posts) {
+
+    $scope.year = $stateParams.year;
+    $scope.month = $stateParams.month;
+    $scope.day = $stateParams.day;
+
     $scope.form = {name: ''};
     $scope.hours = [];
-    
+
+    var months = ['January','February','March','April','May',
+    'June','July','August','September','October','November','December'];
+    var date = new Date();
+    var day = date.getDate();
+    var hour = date.getHours();
+    var month = date.getMonth();
+    var yy = date.getYear();
+    var year = (yy < 1000) ? yy + 1900 : yy;
+
+    $scope.today = (day + ' ' + months[month] + ' ' + year);
+    $scope.hiur = (hour);
+
     for (var i = 0; i < 24; i++) {
       if ($scope.hours[i] === 'undefined') {
         $scope.hours.push({});
       }
       $scope.hours[i] = [];
     }
-    
+
     Posts.query(function(response) {
       for (var i = 0; i < response.length; i++) {
         if ($scope.hours[response[i].hour-1] !== 'undefined') {
@@ -27,7 +43,7 @@ angular.module('postApp')
         }
       }
     });
-    
+
     $scope.addPost = function(hour) {
       if ($scope.form.task.length > 2) {
 
@@ -47,7 +63,7 @@ angular.module('postApp')
         $scope.error = 'Too short';
       }
     };
-    
+
     // delete a todo after checking it
     $scope.deletePost = function(hour, task, i) {
      Posts.remove({slug: task.slug}, function(data) {
@@ -57,5 +73,5 @@ angular.module('postApp')
       });
     };
 
-    
+
   });
