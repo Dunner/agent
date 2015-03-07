@@ -18,7 +18,8 @@ module.exports = function(app) {
   // -------
   // Calendar
   // -------
-  app.get('/api/calendar/:year/:month/:day', calendar.query);
+  app.get('/api/calendar/:year/:month', calendar.getMonth);
+  app.get('/api/calendar/:year/:month/:day', calendar.getDay);
   app.post('/api/calendar/:year/:month/:day', calendar.create);
   app.delete('/api/calendar/:year/:month/:day/:id', calendar.remove);
   // -------

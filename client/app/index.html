@@ -56,17 +56,17 @@
                                 </div>
                             </div>
                             <div class="day-select" ng-show="month === months[currentmonth]">
-                                <ng-day-select>
-                                    <ul>
-                                        <li ng-repeat="day in month.days track by $index"
-                                            ui-sref="day({year: '2015', month:month.id, day: $index+1})"
-                                            class="cursor">
-                                            <div class="valign">
-                                                <div class="middle">{{$index+1}}</div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </ng-day-select>
+                            <ng-day-select>
+                                <ul>
+                                    <li ng-repeat="day in calendar.year[year][currentmonth+1] track by $index"
+                                        ui-sref="day({year: '2015', month:month.id, day: $index+1})"
+                                        class="cursor">
+                                        <div class="valign">
+                                            <div class="middle">{{$index+1}}</div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </ng-day-select>
                             </div>
                         </li>
                     </ul>
@@ -148,6 +148,7 @@
 
         <script src="scripts/services/socket.js"></script>
         <script src="scripts/services/posts.js"></script>
+        <script src="scripts/services/calendar.js"></script>
         <script src="scripts/services/scroll.js"></script>
 
         <script src="scripts/filters/slug.js"></script>
