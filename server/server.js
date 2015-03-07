@@ -12,7 +12,7 @@
   var mongoose       = require('mongoose');
   var ejs            = require('ejs');
   var io             = require('socket.io').listen(server);
-  
+
   var bodyParser     = require('body-parser');
   var cookieParser   = require('cookie-parser');
   var morgan         = require('morgan');
@@ -77,10 +77,10 @@
         console.log("db connection open");
     })
   }));
-  
+
   // Populate empty DB with sample data
-  //require('./config/dummy');
-  
+  require('./config/dummy');
+
   // routes ==================================================
   require('./lib/routes')(app); // configure API routes
   // socket messages ===============================================

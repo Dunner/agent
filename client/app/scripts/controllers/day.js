@@ -36,10 +36,14 @@ angular.module('postApp')
       $scope.hours[i] = [];
     }
 
-    Posts.query(function(response) {
+    Posts.query({
+      'year':$stateParams.year,
+      'month': $stateParams.month,
+      'day': $stateParams.day},
+      function(response) {
       for (var i = 0; i < response.length; i++) {
-        if ($scope.hours[response[i].hour-1] !== 'undefined') {
-          $scope.hours[response[i].hour-1].push(response[i]);
+        if ($scope.hours[response[i].hour] !== 'undefined') {
+          $scope.hours[response[i].hour - 1].push(response[i]);
         }
       }
     });
@@ -51,12 +55,15 @@ angular.module('postApp')
         var newPost = new Posts({
           hour: hour,
           task: $scope.form.task,
-          slug: $filter('slug')($scope.form.task),
-          completed: false
         });
-        newPost.$save(function(data){
+        newPost.$save({
+        'year':$stateParams.year,
+        'month': $stateParams.month,
+        'day': $stateParams.day},
+        function(data){
           $scope.form = {name: ''};
           $scope.hours[hour-1].push(data);
+          console.log(data);
         });
 
       } else {
@@ -66,7 +73,12 @@ angular.module('postApp')
 
     // delete a todo after checking it
     $scope.deletePost = function(hour, task, i) {
-     Posts.remove({slug: task.slug}, function(data) {
+     Posts.remove({
+      'year':$stateParams.year,
+      'month': $stateParams.month,
+      'day': $stateParams.day,
+      'id': task._id},
+      function(data) {
         if (data) {
           hour.splice(i, 1);
         }

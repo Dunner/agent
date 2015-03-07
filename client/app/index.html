@@ -50,7 +50,7 @@
                                     </div>
                                 </div>
                                 <div class="cursor month-next" ng-click="nextMonth()" ng-show="month === months[currentmonth]">
-                                    <svg  class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 306" >
+                                    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 306" >
                                         <g><polygon points="94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153"/></g>
                                     </svg>
                                 </div>
@@ -85,8 +85,20 @@
                     </div>
                     <div class="right-buttons">
                         <ul>
-                            <li>1</li>
-                            <li class="separator-left">2</li>
+                            <li>
+                                <div class="cursor icon">
+                                    <svg class="arrow arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 306" >
+                                        <g><polygon points="94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153"/></g>
+                                    </svg>
+                                </div>
+                            </li>
+                            <li class="separator-left">
+                                <div class="cursor icon">
+                                    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 306" >
+                                        <g><polygon points="94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153"/></g>
+                                    </svg>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>

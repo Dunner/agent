@@ -5,13 +5,33 @@ var mongoose = require('mongoose'),
     Schema   = mongoose.Schema;
 
 var postSchema = new Schema({
-    hour : Number,
-    date : Date,
-    task: String,
-    slug : String,
-    createdAt: Date,
+    userId : String,
+    years : [
+      {
+        year: Number,
+        months: [
+          {
+            month: Number,
+            days: [
+              {
+                day: Number,
+                tasks: [
+                  {
+                    task: String,
+                    hour: Number
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+});
+
+var yearSchema = new Schema({
+  year: Number
 });
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('Post', postSchema);
-

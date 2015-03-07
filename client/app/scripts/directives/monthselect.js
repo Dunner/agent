@@ -13,28 +13,31 @@ angular.module('postApp')
     var ctrl = function($scope, $element) {
 
       $scope.months = [
-        {'id': 1, 'name': 'January', 'days': []},
-        {'id': 2, 'name': 'February', 'days': []},
-        {'id': 3, 'name': 'March', 'days': []},
-        {'id': 4, 'name': 'April', 'days': []},
-        {'id': 5, 'name': 'May', 'days': []},
-        {'id': 6, 'name': 'June', 'days': []},
-        {'id': 7, 'name': 'July', 'days': []},
-        {'id': 8, 'name': 'August', 'days': []},
-        {'id': 9, 'name': 'September', 'days': []},
-        {'id': 10, 'name': 'October', 'days': []},
-        {'id': 11, 'name': 'November', 'days': []},
-        {'id': 12, 'name': 'December', 'days': []}
+        {'id': 1, 'name': 'January'},
+        {'id': 2, 'name': 'February'},
+        {'id': 3, 'name': 'March'},
+        {'id': 4, 'name': 'April'},
+        {'id': 5, 'name': 'May'},
+        {'id': 6, 'name': 'June'},
+        {'id': 7, 'name': 'July'},
+        {'id': 8, 'name': 'August'},
+        {'id': 9, 'name': 'September'},
+        {'id': 10, 'name': 'October'},
+        {'id': 11, 'name': 'November'},
+        {'id': 12, 'name': 'December'}
       ];
+
       //Month is 1 based
       function daysInMonth(month,year) {
           return new Date(year, month, 0).getDate();
       }
+
       for (var i = 0 ; i < $scope.months.length; i++) {
         for (var x = 0 ; x < daysInMonth(i+1,2015); x++) {
-          $scope.months[i].days.push('');
+          // $scope.months[i].days.push('');
         }
       }
+
       $scope.currentmonth = 0;
       $scope.element = angular.element($element.children()[0]);
 
@@ -73,12 +76,41 @@ angular.module('postApp')
       //       console.log(newValue, $element[0].children[0].children);
       //   }
       // });
+
+      $scope.yearo = 2015;
+      $scope.calendar = {
+        2015: {
+          1: {name: 'Jan', days:{}},
+          2: {name: 'Feb', days:{}},
+          3: {name: 'Mar', days:{}},
+          4: {name: 'Apr', days:{}},
+          5: {name: 'May', days:{}},
+          6: {name: 'Jun', days:{}},
+          7: {name: 'Jul', days:{}},
+          8: {name: 'Aug', days:{}},
+          9: {name: 'Sep', days:{}},
+          10: {name: 'Okt', days:{}},
+          11: {name: 'Nov', days:{}},
+          12: {name: 'Dec', days:{}}
+        }
+      };
+
+      for(var i=1; i <= 12; i++){
+        var month = $scope.calendar[$scope.yearo][i];
+        var ndays = daysInMonth(i, $scope.yearo, 0);
+        for(var x=1; x <= ndays; x++) {
+          month.days[x] = '';
+        }
+      }
+      console.log($scope.calendar);
+
+
     };
     return {
       restrict: 'EA',
       replace: true,
       transclude: true,
       link: ctrl,
-      template: '<nav class="hour calendar" ng-transclude></div>'
+      template: '<nav class="inline calendar" ng-transclude></div>'
     };
   });

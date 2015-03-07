@@ -3,17 +3,24 @@
 'use strict';
 var middleware = require('./middleware'),
     index = require('./controllers/index'),
-    posts = require('./controllers/posts');
+    posts = require('./controllers/posts'),
+    calendar = require('./controllers/calendar');
 
 module.exports = function(app) {
   // Server API Routes
   // -------
   // Posts
   // -------
-  app.get('/api/posts', posts.query);
-  app.get('/api/posts/:slug', posts.show);
-  app.post('/api/posts/:slug', posts.create);
-  app.delete('/api/posts/:slug', posts.remove);
+  // app.get('/api/posts', posts.query);
+  app.get('/api/posts/:year/:month/:day', posts.query);
+  app.post('/api/posts/:year/:month/:day', posts.create);
+  app.delete('/api/posts/:year/:month/:day/:id', posts.remove);
+  // -------
+  // Calendar
+  // -------
+  app.get('/api/calendar/:year/:month/:day', calendar.query);
+  app.post('/api/calendar/:year/:month/:day', calendar.create);
+  app.delete('/api/calendar/:year/:month/:day/:id', calendar.remove);
   // -------
   // Other
   // -------
