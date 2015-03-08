@@ -43,28 +43,28 @@ angular.module('postApp')
       }
     );
 
-    // $scope.addPost = function(hour) {
-    //   if ($scope.form.task.length > 2) {
+    $scope.addPost = function(hour) {
+      if ($scope.form.task.length > 2) {
 
-    //     //Create sound in db
-    //     var newPost = new Posts({
-    //       hour: hour,
-    //       task: $scope.form.task,
-    //     });
-    //     newPost.$save({
-    //     'year':$stateParams.year,
-    //     'month': $stateParams.month,
-    //     'day': $stateParams.day},
-    //     function(data){
-    //       $scope.form = {name: ''};
-    //       $scope.hours[hour-1].push(data);
-    //       console.log(data);
-    //     });
+        //Create sound in db
+        var newPost = new Calendar({
+          hour: hour,
+          task: $scope.form.task,
+        });
+        newPost.$save({
+        'year':$stateParams.year,
+        'month': $stateParams.month,
+        'day': $stateParams.day},
+        function(data){
+          $scope.form = {name: ''};
+          $scope.hours[hour-1].push(data);
+          console.log(data);
+        });
 
-    //   } else {
-    //     $scope.error = 'Too short';
-    //   }
-    // };
+      } else {
+        $scope.error = 'Too short';
+      }
+    };
 
     // // delete a todo after checking it
     // $scope.deletePost = function(hour, task, i) {

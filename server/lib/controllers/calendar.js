@@ -15,6 +15,9 @@ exports.getMonth = function(req, res) {
   Calendar
   .findOne()
   .exec(function(err, calendar) {
+    if (!calendar) {
+      calendar = new Calendar();
+    }
     if (err) {
       return res.end();
     };
@@ -30,7 +33,7 @@ exports.getMonth = function(req, res) {
     if(Object.keys(calendar.year[year][month]).length === 0){
       var daysinmonth = new Date(year, month, 0).getDate();
       for (var i = 1; i <= daysinmonth; i++) {
-        calendar.year[year][month][i] = {};
+        calendar.year[year][month][i] = [];
       };
     }
     //Send back the calendar
@@ -55,6 +58,16 @@ exports.getDay = function(req, res) {
 
 // Create a post
 exports.create = function(req, res) {
+  var year = JSON.parse(req.params.year),
+      month = JSON.parse(req.params.month),
+      day = JSON.parse(req.params.day);
+  Calendar
+  .findOne()
+  .exec(function(err, calendar) {
+    calendar.year[year][month][day].push(req.body);
+    calendar.markModified('year');
+    calendar.save();
+  });
 };
 
 // Remove a todo
