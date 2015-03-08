@@ -17,7 +17,7 @@ angular.module('postApp')
       $scope.year = 2015;
       $scope.currentmonth = 0;
       $scope.element = angular.element($element.children()[0]);
-      $scope.calendar = {};
+      $scope.calendar = Calendar.getCalendar();
 
       $scope.months = [
         {'id': 1, 'name': 'January'},
@@ -35,24 +35,7 @@ angular.module('postApp')
       ];
       angular.element($element[0]).css({'width': (displaywidth * $scope.months.length) + 'px'});
       function getMonth(year, month) {
-        Calendar.get({
-          'year': year,
-          'month': month},
-          function(response) {
-            var push = {};
-            push[year] = {};
-            if (!$scope.calendar.year) {
-              $scope.calendar.year = push;
-            }
-            if (!$scope.calendar.year[year][month]) {
-              $scope.calendar.year[year][month] = {};
-            }
-            $scope.calendar.year[year][month] = response;
-            //console.log($scope.calendar.year[year][month]);
-            console.log($scope.calendar);
-            return true;
-          }
-        );
+        Calendar.getMonth(year,month);
       }
 
       $scope.previousMonth = function() {
@@ -74,8 +57,8 @@ angular.module('postApp')
         getMonth($scope.year, $scope.currentmonth + 1);
       };
 
-
-
+      //Get january
+      getMonth($scope.year, $scope.currentmonth + 1);
 
     };
     return {

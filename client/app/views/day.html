@@ -15,10 +15,10 @@
 
             <li class="task separator-right" ng-repeat="task in hour">
                 {{task.task}}
-                <div class="remove" ng-click="deletePost(hour,task,$index)"></div>
+                <div class="remove" ng-click="deleteTask(hour,task,$index)"></div>
             </li>
             <li class="cursor task">
-                <form class="post-form" ng-submit="addPost($index+1)" ng-show="addtask">
+                <form class="post-form" ng-submit="addTask($index+1)" ng-show="addtask">
                     <input name="task" type="text" placeholder="task" ng-model="form.task" autofocus="" />
 
                     <button type="submit" class="button button-ok" ng-click="addtask = false">Post</button>

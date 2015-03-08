@@ -16,6 +16,7 @@ angular.module('postApp')
 
     $scope.form = {name: ''};
     $scope.hours = [];
+    $scope.calendar = Calendar.getCalendar();
 
     var date = new Date();
     var day = date.getDate();
@@ -34,51 +35,34 @@ angular.module('postApp')
       $scope.hours[i] = [];
     }
 
-    Calendar.get({
-      'year':$stateParams.year,
-      'month': $stateParams.month,
-      'day': $stateParams.day},
-      function(response) {
-        console.log(response);
-      }
-    );
+    for (var t = 0; t < $scope.calendar.year[$stateParams.year][$stateParams.month][$stateParams.day].length; t++) {
+      var task = $scope.calendar.year[$stateParams.year][$stateParams.month][$stateParams.day][t];
+      $scope.hours[task.hour - 1].push(task);
+    }
 
-    $scope.addPost = function(hour) {
+    $scope.addTask = function(hour) {
       if ($scope.form.task.length > 2) {
-
-        //Create sound in db
-        var newPost = new Calendar({
-          hour: hour,
-          task: $scope.form.task,
-        });
-        newPost.$save({
-        'year':$stateParams.year,
-        'month': $stateParams.month,
-        'day': $stateParams.day},
-        function(data){
+        var newtask = { hour: hour, task: $scope.form.task };
+        Calendar.addTask($stateParams.year, $stateParams.month, $stateParams.day, newtask,
+        function(cb) {
+          console.log(task);
           $scope.form = {name: ''};
-          $scope.hours[hour-1].push(data);
-          console.log(data);
+          $scope.hours[hour-1].push(cb);
         });
-
       } else {
         $scope.error = 'Too short';
       }
     };
 
-    // // delete a todo after checking it
-    // $scope.deletePost = function(hour, task, i) {
-    //  Posts.remove({
-    //   'year':$stateParams.year,
-    //   'month': $stateParams.month,
-    //   'day': $stateParams.day,
-    //   'id': task._id},
-    //   function(data) {
-    //     if (data) {
-    //       hour.splice(i, 1);
-    //     }
-    //   });
-    // };
+    // delete task
+    $scope.deleteTask = function(hour, task, i) {
+      Calendar.removeTask($stateParams.year, $stateParams.month, $stateParams.day, task._id,
+      function(cb) {
+        if (cb) {
+          hour.splice(i, 1);
+        }
+      });
+    };
 
 
   });

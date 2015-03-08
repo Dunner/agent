@@ -21,7 +21,7 @@
     box-shadow inset 0px 3px 3px -3px #fff
 
 .sidepanel
-  width 580px
+  width 100%
   height 100%
   float left
   position relative
@@ -87,15 +87,39 @@
       & nav, ul
         height 100%
       & li
-        display inline-block
-        width 25%
         text-align center
         padding 0 3px
-        height 11.25%
+        transition all 0.5s ease-in-out
+        // display inline-block
+        // width 25%
+        // height 11.25%
+        // background-clip content-box
         color #222
         background rgba(255,255,255,.3)
-        background-clip content-box
+
+        position absolute
+        top 0px
+        left 0px
+        width 50px
+        height 50px
+
+
         overflow hidden
+        &:active
+          position absolute
+          left 0px
+          top 0px
+          width 100%
+          height 100%
+        & .task-percent
+          display block
+          content ''
+          position absolute
+          left 0px
+          top 0px
+          width 0%
+          height 100%
+          background rgba(100,212,249,0.9)
   & .side-bottom
     height 15%
     width 100%

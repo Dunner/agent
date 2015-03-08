@@ -61,15 +61,37 @@ exports.create = function(req, res) {
   var year = JSON.parse(req.params.year),
       month = JSON.parse(req.params.month),
       day = JSON.parse(req.params.day);
+      newtask = req.body;
+  newtask._id = new ObjectId;
+
   Calendar
   .findOne()
   .exec(function(err, calendar) {
-    calendar.year[year][month][day].push(req.body);
+    calendar.year[year][month][day].push(newtask);
     calendar.markModified('year');
     calendar.save();
+    res.json(newtask);
   });
 };
 
 // Remove a todo
 exports.remove = function(req, res) {
+  var year = JSON.parse(req.params.year),
+      month = JSON.parse(req.params.month),
+      day = JSON.parse(req.params.day),
+      id = req.params.id;
+
+  Calendar
+  .findOne()
+  .exec(function(err, calendar) {
+    for (var i = calendar.year[year][month][day].length - 1; i >= 0; i--) {
+      var task = calendar.year[year][month][day][i];
+      if (task._id == id) {
+        calendar.year[year][month][day].splice(i,1);
+        calendar.markModified('year');
+        calendar.save();
+        res.json(task);
+      }
+    };
+  });
 };
