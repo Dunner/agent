@@ -1,11 +1,36 @@
 
 .post-toggle.ng-hide, .post-form.ng-hide
-    opacity 0
-    pointer-events none
+  opacity 0
+  pointer-events none
 
-.month-previous.ng-hide, .month-next.ng-hide, .day-select.ng-hide
-    opacity 0
-    display block!important
+.month-previous.ng-hide, .month-next.ng-hide, .day-select.ng-hide,
+  opacity 0
+  display block!important
+
+.dayline-select.ng-hide
+  opacity 0 !important
+  height 100% !important
+  display block!important
+.dayline-select
+  transition opacity 0.3s 0.5s ease-in-out, height 0.5s 0.3s ease-in-out
+
+.daygrid-select.ng-hide
+  opacity 0 !important
+  height calc( 100% / 7 ) !important
+  position absolute !important
+  top calc( 100% / 7 ) !important
+  z-index 0 !important
+  display block!important
+  & .expand
+    height 100% !important
+.daygrid-select
+  transition height 0.5s 0.3s ease-in-out, opacity 0.3s 0.5s ease-out
+
+.hours.ng-hide
+  width 0px
+  opacity 0
+  display block!important
+
 .month-previous, .month-next
   opacity 1
   transition opacity 1s ease-in-out
@@ -14,12 +39,16 @@
   opacity 1
   transition opacity 0.5s ease-in-out
 
+.hours
+  opacity 1
+  transition opacity 0.3s 0.5s ease-in-out
+
 .task-pecent
   transition width 3s ease-in-out
 
 .login.ng-hide
-    top -50%
-    display block!important
+  top -50%
+  display block!important
 
 .login
   transition top 0.3s ease-in-out

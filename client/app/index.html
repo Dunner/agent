@@ -25,113 +25,113 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <!-- Add your site or application content here -->
-    <div class="wrapper">
-      <div class="sidepanel">
+    <div class="wrapper" ng-controller="appCtrl">
         <div class="side-top">
-            <div class="canvas">
-                <div class="top">
-                </div>
+            <div class="top">
+                {{weekdays[today.weekday]}} the {{today.day}}th/rd - {{today.year}}/{{today.month}}
+                Hour: {{today.hour}},
+                Tasks: {{calendar.year[today.year][today.month][today.day].length}}
+                <br/>
+
             </div>
         </div>
-        <div class="side-middle" ng-swipe-left="nextMonth()" ng-swipe-right="previousMonth()">
-            <div class="canvas calendar">
-                <ng-month-select>
-                    <ul>
-                        <li ng-repeat="month in months">
-                            <div class="month-select separator-bottom">
-                                <div class="cursor month-previous" ng-click="previousMonth()" ng-show="month === months[currentmonth]">
+        <div class="side-middle">
+            <ng-line-calendar>
+                <div class="month-select" id="month-scroll">
+                    <nav class="inline calendar" >
+                        <ul id="months">
+                            <li ng-repeat="month in months" ng-swipe-left="getMonth(year, currentmonth + 1, 'next')" ng-swipe-right="getMonth(year, currentmonth + 1, 'previous')">
+                                <div class="cursor month-previous" ng-click="getMonth(year, currentmonth + 1, 'previous')" ng-show="month === months[currentmonth]">
                                     <svg class="arrow arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 306" >
                                         <g><polygon points="94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153"/></g>
                                     </svg>
                                 </div>
                                 <div class="month-label">
                                     <div class="valign">
-                                        <div class="middle">{{month.name}}</div>
+                                        <div class="middle cursor" ng-click="switch()">{{month.name}}</div>
                                     </div>
                                 </div>
-                                <div class="cursor month-next" ng-click="nextMonth()" ng-show="month === months[currentmonth]">
+                                <div class="cursor month-next" ng-click="getMonth(year, currentmonth + 1, 'next')" ng-show="month === months[currentmonth]">
                                     <svg class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 306" >
                                         <g><polygon points="94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153"/></g>
                                     </svg>
                                 </div>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="daygrid-select ng-hide" id="days-grid" ng-show="calendarType === 'grid'" ng-swipe-left="getMonth(year, currentmonth + 1, 'next')" ng-swipe-right="getMonth(year, currentmonth + 1, 'previous')">
+                    <ul>
+                        <li ng-repeat="day in calendar.year[year][currentmonth+1]"
+                            ng-click="getDay($index+1, 'specific'); dayExpand($index+1); switch();"
+                            ng-class="{expand: activeday == $index+1, active: currentday == $index+1}"
+                            class="cursor"
+                            data-id="{{$index+1}}">
+                            <div class="task-percent" ng-style="taskPercent(calendar.year[year][currentmonth+1][{{$index+1}}].length)"></div>
+                            <div class="valign">
+                                <div class="middle">{{$index+1}}</div>
                             </div>
                         </li>
                     </ul>
-                    <div class="day-select" id="days">
-                        <ul>
-                            <li ng-repeat="day in calendar.year[year][currentmonth+1] track by $index"
-                                ng-click="dayExpand(year, currentmonth+1, $index+1)"
-                                class="cursor">
-                                <div class="task-percent" ng-show="mode === 'months'" ng-style="taskPercent(day.length)"></div>
-                                <div class="valign" ng-show="mode === 'months'">
-                                    <div class="middle">{{$index+1}}</div>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="hours" id="hours" ng-show="mode === 'hours'">
-                            <div class="hour" ng-repeat="hour in hours" >
-                                <nav class="inline separator-bottom">
-                                    <ul>
-                                        <li class="task-leftoff">
-                                        </li>
-                                        <li class="task-label">
-                                            <div class="day-circle"></div>
-                                            {{$index+1}}
-                                        </li>
-
-                                        <li class="task separator-right" ng-repeat="task in hour">
-                                            {{task.task}}
-                                            <div class="remove" ng-click="deleteTask(hour,task,$index)"></div>
-                                        </li>
-                                        <li class="cursor task">
-                                            <form class="post-form" ng-submit="addTask($index+1)" ng-show="addtask">
-                                                <input name="task" type="text" placeholder="task" ng-model="form.task" autofocus="" />
-
-                                                <button type="submit" class="button button-ok" ng-click="addtask = false">Post</button>
-                                                <div class="button button-cancel" ng-click="addtask = false">Cancel</div>
-                                                <div style="clear:both"></div>
-                                            </form>
-                                            <div class="addtask" ng-click="addtask = true" ng-show="!addtask">Add</div>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </ng-month-select>
-            </div>
-        </div>
-        <div class="side-bottom">
-            <div class="canvas"></div>
-        </div>
-      </div>
-      <!-- <div class="maincontent">
-            <div class="canvas" ui-view=""></div>
-            <div class="main-bottom">
-                <div class="canvas">
-                    <div class="left-info">
-                    </div>
-                    <div class="right-buttons">
-                        <ul>
-                            <li>
-                                <div class="cursor icon">
+                </div>
+                <div class="dayline-select" id="day-scroll" ng-show="calendarType === 'line'">
+                    <nav class="inline calendar" >
+                        <ul id="days">
+                            <li ng-repeat="day in days" ng-swipe-right="getDay(currentday-1, 'previous')" ng-swipe-left="getDay(currentday+1, 'next')">
+                                <div class="cursor month-previous" ng-click="getDay(currentday-1, 'previous')" ng-show="$index+1 === currentday">
                                     <svg class="arrow arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 306" >
                                         <g><polygon points="94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153"/></g>
                                     </svg>
                                 </div>
-                            </li>
-                            <li class="separator-left">
-                                <div class="cursor icon">
+                                <div class="month-label">
+                                    <!-- <div class="task-percent" ng-style="taskPercent(calendar.year[year][currentmonth+1][{{$index+1}}].length)"></div> -->
+                                    <div class="valign">
+                                        <div class="middle">{{$index+1}}</div>
+                                    </div>
+                                </div>
+                                <div class="cursor month-next" ng-click="getDay(currentday+1, 'next')"  ng-show="$index+1 === currentday">
                                     <svg class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 306" >
                                         <g><polygon points="94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153"/></g>
                                     </svg>
                                 </div>
                             </li>
                         </ul>
-                    </div>
+                    </nav>
                 </div>
+                <p>day: {{weekday}}</p>
+                <div class="hours" id="hours">
+                    <ul>
+                        <li class="hour" ng-repeat="task in calendar.year[year][currentmonth+1][currentday]">
+                            <div class="valign">
+                                <div class="middle">{{task.task}}</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </ng-line-calendar>
+        </div>
+        <div class="side-bottom">
+            <div class="left-info">
             </div>
-      </div> -->
+            <div class="right-buttons">
+                <ul>
+                    <li>
+                        <div class="cursor icon">
+                            <svg class="arrow arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 306" >
+                                <g><polygon points="94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153"/></g>
+                            </svg>
+                        </div>
+                    </li>
+                    <li class="separator-left">
+                        <div class="cursor icon">
+                            <svg class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 306" >
+                                <g><polygon points="94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153"/></g>
+                            </svg>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -169,9 +169,9 @@
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
 
-        <script src="scripts/controllers/day.js"></script>
+        <script src="scripts/controllers/controller.js"></script>
 
-        <script src="scripts/directives/monthselect.js"></script>
+        <script src="scripts/directives/linecalendar.js"></script>
 
         <script src="scripts/services/socket.js"></script>
         <script src="scripts/services/calendar.js"></script>
