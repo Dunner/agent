@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        <div class="side-middle">
+        <div class="side-middle" ng-swipe-left="nextMonth()" ng-swipe-right="previousMonth()">
             <div class="canvas calendar">
                 <ng-month-select>
                     <ul>
@@ -55,23 +55,49 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="day-select" ng-show="month === months[currentmonth]">
-                            <ng-day-select>
-                                <ul>
-                                    <li ng-repeat="day in calendar.year[year][currentmonth+1] track by $index"
-                                        ui-sref="day({year: '2015', month:month.id, day: $index+1})"
-                                        ng-click="dayExpand($index)"
-                                        class="cursor">
-                                        <div class="task-percent" ng-style="taskPercent(day.length)"></div>
-                                        <div class="valign">
-                                            <div class="middle">{{$index+1}}</div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </ng-day-select>
-                            </div>
                         </li>
                     </ul>
+                    <div class="day-select" id="days">
+                        <ul>
+                            <li ng-repeat="day in calendar.year[year][currentmonth+1] track by $index"
+                                ng-click="dayExpand(year, currentmonth+1, $index+1)"
+                                class="cursor">
+                                <div class="task-percent" ng-show="mode === 'months'" ng-style="taskPercent(day.length)"></div>
+                                <div class="valign" ng-show="mode === 'months'">
+                                    <div class="middle">{{$index+1}}</div>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="hours" id="hours" ng-show="mode === 'hours'">
+                            <div class="hour" ng-repeat="hour in hours" >
+                                <nav class="inline separator-bottom">
+                                    <ul>
+                                        <li class="task-leftoff">
+                                        </li>
+                                        <li class="task-label">
+                                            <div class="day-circle"></div>
+                                            {{$index+1}}
+                                        </li>
+
+                                        <li class="task separator-right" ng-repeat="task in hour">
+                                            {{task.task}}
+                                            <div class="remove" ng-click="deleteTask(hour,task,$index)"></div>
+                                        </li>
+                                        <li class="cursor task">
+                                            <form class="post-form" ng-submit="addTask($index+1)" ng-show="addtask">
+                                                <input name="task" type="text" placeholder="task" ng-model="form.task" autofocus="" />
+
+                                                <button type="submit" class="button button-ok" ng-click="addtask = false">Post</button>
+                                                <div class="button button-cancel" ng-click="addtask = false">Cancel</div>
+                                                <div style="clear:both"></div>
+                                            </form>
+                                            <div class="addtask" ng-click="addtask = true" ng-show="!addtask">Add</div>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
                 </ng-month-select>
             </div>
         </div>
@@ -146,7 +172,6 @@
         <script src="scripts/controllers/day.js"></script>
 
         <script src="scripts/directives/monthselect.js"></script>
-        <script src="scripts/directives/dayselect.js"></script>
 
         <script src="scripts/services/socket.js"></script>
         <script src="scripts/services/calendar.js"></script>
