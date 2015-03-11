@@ -42,17 +42,24 @@ angular.module('postApp')
       {'id': 12, 'name': 'December'}
     ];
 
-    $scope.calendarTypes = ['grid', 'line'];
-    $scope.calendarType = $scope.calendarTypes[1];
-    $scope.switch = function() {
-      if ($scope.calendarType === $scope.calendarTypes[0]) {
-        $scope.calendarType = $scope.calendarTypes[1];
+    $scope.selectTypes = ['grid', 'line', 'list'];
+    $scope.selectDayType = $scope.selectTypes[1];
+    $scope.switchDay = function() {
+      if ($scope.selectDayType === $scope.selectTypes[0]) {
+        $scope.selectDayType = $scope.selectTypes[1];
       }else{
-        $scope.calendarType = $scope.calendarTypes[0];
+        $scope.selectDayType = $scope.selectTypes[0];
         $scope.activeday = 0;
       }
     };
-
+    $scope.selectMonthType = $scope.selectTypes[1];
+    $scope.switchMonth = function() {
+      if ($scope.selectMonthType === $scope.selectTypes[2]) {
+        $scope.selectMonthType = $scope.selectTypes[1];
+      }else{
+        $scope.selectMonthType = $scope.selectTypes[2];
+      }
+    };
     $scope.taskPercent = function(length) {
       if (length !== 0 && length !== 24) {
         length = Math.round(length/24*100)+'%';
@@ -69,4 +76,41 @@ angular.module('postApp')
       return $scope.weekdays[d.getDay()];
     };
 
+
+    $scope.addTask = function() {
+      if ($scope.form.task.length > 2) {
+        var newtask = { hours: $scope.form.hours, task: $scope.form.task };
+        Calendar.addTask($scope.year, $scope.currentmonth + 1, $scope.day, newtask,
+        function() {
+          $scope.form = {task: '', hours: 1};
+        });
+      } else {
+        $scope.error = 'Too short';
+      }
+    };
+
+    // delete task
+    $scope.deleteTask = function(task) {
+      Calendar.removeTask($scope.year, $scope.currentmonth + 1, $scope.day, task._id,
+      function(cb) {
+        if (cb) {
+          console.log(cb);
+        }
+      });
+    };
+
+
+    $scope.rotateWeek = function(day) {
+      $scope.rotatedweek = $scope.weekdays;
+      for(var ad = 0; ad < $scope.weekdays.length; ad++) {
+        if ($scope.rotatedweek[3] === day) {
+          return;
+        }else{
+          $scope.rotatedweek = $scope.rotatedweek.slice();
+          var temp = $scope.rotatedweek.shift();
+          $scope.rotatedweek.push( temp );
+        }
+      }
+    };
+    $scope.rotateWeek($scope.weekdays[$scope.today.weekday]);
   });

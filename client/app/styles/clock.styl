@@ -1,0 +1,163 @@
+.aspect
+  width 60%
+  margin 0 auto
+  &:before
+    content ""
+    display block
+    padding-top 18%
+  .clock
+    position absolute
+    top 0
+    left 0
+    bottom 0
+    right 0
+    .cells
+      width calc( 14.285% - ( 14.285% / 6 ) ) !important
+      height 100%
+      float left
+      margin-right calc( 14.285% / 3 )
+      overflow hidden
+      &:nth-child(2n+2)
+        margin-right calc( (14.285% / 3) + ( (14.285% / 3) / 2 ) )
+        &:after, &:before
+          content ''
+          position absolute
+          width 22%
+          height 11%
+          background orange
+          border-radius 100% 100%
+        &:after
+          left calc( 100% + ( 33.333% / 2 ) )
+          top 25%
+        &:before
+          left calc( 100% + ( 33.333% / 2 ) )
+          bottom 25%
+      &:last-child
+        margin 0
+        &:after, &:before
+          display none
+
+.testbar
+  position absolute
+  transition opacity 0.25s ease-in-out
+  background #272e38
+  border-color #272e38
+  &:before, &:after
+    content ''
+    position absolute
+    border 20px solid transparent
+
+  &:nth-child(1) //TOP LEFT
+    width 10%
+    left 0px
+    top 10%
+    height calc( 50% - 18% )
+    &:before
+      right 0px
+      top -20px
+      border-width 0 20px 20px 0
+      border-bottom-color inherit
+    &:after
+      right 0px
+      bottom -20px
+      border-width 20px 20px 0 0
+      border-top-color inherit
+
+  &:nth-child(2) // TOP
+    left 13%
+    top 0px
+    width 74%
+    height 7%
+    &:before
+      left -20px
+      bottom 0px
+      border-top 20px solid black
+      border-left 20px solid transparent
+      border-width 20px 0 0 20px
+      border-top-color inherit
+    &:after
+      right -20px
+      bottom 0px
+      border-width 20px 20px 0 0
+      border-top-color inherit
+
+  &:nth-child(3) // TOP RIGHT
+    width 10%
+    right 0px
+    top 10%
+    height calc( 50% - 18% )
+    &:before
+      left 0px
+      top -20px
+      border-width 0 0 20px 20px
+      border-bottom-color inherit
+    &:after
+      left 0px
+      bottom -20px
+      border-width 20px 0 0 20px
+      border-top-color inherit
+
+  &:nth-child(4) // MIDDLE
+    left 12.5%
+    width 75%
+    top calc( 50% - 4.5% )
+    height 9%
+    &:before
+      display none
+      left -20px
+      top 0px
+      border-width 5px 5px 5px 5px
+      border-right-color inherit
+    &:after
+      display none
+      right -20px
+      top 0px
+      border-width 5px 5px 5px 5px
+      border-left-color inherit
+  &:nth-child(5) //BOTTOM LEFT
+    width 10%
+    left 0px
+    bottom 10%
+    height calc( 50% - 18% )
+    &:before
+      right 0px
+      top -20px
+      border-width 0 20px 20px 0
+      border-bottom-color inherit
+    &:after
+      right 0px
+      bottom -20px
+      border-width 20px 20px 0 0
+      border-top-color inherit
+
+  &:nth-child(6) // BOTTOM
+    left 13%
+    width 74%
+    bottom 0px
+    height 7%
+    &:before
+      left -20px
+      top 0px
+      border-width 0 0 20px 20px
+      border-bottom-color inherit
+    &:after
+      right -20px
+      top 0px
+      border-width 0 20px 20px 0
+      border-bottom-color inherit
+
+  &:nth-child(7) // BOTTOM RIGHT
+    width 10%
+    right 0px
+    bottom 10%
+    height calc( 50% - 18% )
+    &:before
+      left 0px
+      top -20px
+      border-width 0 0 20px 20px
+      border-bottom-color inherit
+    &:after
+      left 0px
+      bottom -20px
+      border-width 20px 0 0 20px
+      border-top-color inherit

@@ -12,14 +12,14 @@ angular.module('postApp')
   .directive('ngLineCalendar', function(scroll, Calendar, $timeout) {
     var ctrl = function($scope) {
 
-      var monthwrapper = angular.element(document.getElementById('month-scroll')),
-          monthscroll = document.getElementById('month-scroll'),
+      var monthwrapper = angular.element(document.getElementById('month-line')),
+          monthscroll = document.getElementById('month-line'),
           monthexpand = angular.element(monthwrapper.children(0)),
           monthwidth = monthwrapper[0].offsetWidth,
           monthcontainer = angular.element(document.getElementById('months'));
 
-      var daywrapper = angular.element(document.getElementById('day-scroll')),
-          dayscroll = document.getElementById('day-scroll'),
+      var daywrapper = angular.element(document.getElementById('day-line')),
+          dayscroll = document.getElementById('day-line'),
           dayexpand = angular.element(daywrapper.children(0)),
           daywidth = daywrapper[0].offsetWidth,
           daycontainer = angular.element(document.getElementById('days'));
@@ -67,8 +67,9 @@ angular.module('postApp')
 
       //Get current month
       $timeout(function(){
-        $scope.getMonth($scope.year, $scope.today.month, 'specific', 9);
+        $scope.toToday();
       },300);
+
       $timeout(function(){
         scrollspeed = 300;
       },3000);
@@ -122,9 +123,15 @@ angular.module('postApp')
         }
       }
 
+      //Day grid popup
       $scope.dayExpand = function(day) {
         $scope.activeday = day;
         $scope.mode = 'hours';
+      };
+
+      //Scroll to today
+      $scope.toToday = function(){
+        $scope.getMonth($scope.year, $scope.today.month, 'specific', $scope.today.day);
       };
 
     };

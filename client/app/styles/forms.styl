@@ -6,9 +6,11 @@ form
   // border-right 1px solid color-highlight
   //padding 6% 4%
 
-input[type="email"],input[type="password"],input[type="name"],input[type="text"]
+input[type="email"],input[type="password"],input[type="name"],input[type="text"],input[type="number"]
   border 1px solid #CCC
-  padding 10px
+  line-height 50px
+  height 50px
+  padding-left 10px
   border-radius 4px
   width 100%
   background #fff
@@ -20,13 +22,14 @@ input[type="email"],input[type="password"],input[type="name"],input[type="text"]
   -webkit-user-select text
   -webkit-appearance textfield
   cursor auto
+  margin 0
 input[name=title]
   border-bottom-left-radius 0px
   border-bottom-right-radius 0px
 input[name=content]
   border-top-left-radius 0px
   border-top-right-radius 0px
-  
+
 textarea
   border 1px solid #CCC
   padding 10px
@@ -49,7 +52,7 @@ textarea[name=excerpt]
   border-right 1px solid #CCC
   border-radius 0px
   resize none
-  
+
 .input-content
   border 1px solid #CCC
   border-radius 4px
@@ -62,15 +65,25 @@ textarea[name=excerpt]
   color #555
   border-top-left-radius 0px
   border-top-right-radius 0px
-  
-.drop-box 
-    background #F8F8F8
-    border 5px dashed #DDD
-    width 200px
-    height 65px
-    text-align center
-    padding-top 25px
-    margin 10px
 
-.dragover 
-    border 5px dashed blue
+.drop-box
+  background #F8F8F8
+  border 5px dashed #DDD
+  width 200px
+  height 65px
+  text-align center
+  padding-top 25px
+  margin 10px
+
+.dragover
+  border 5px dashed blue
+
+
+//custom
+
+input[name=task]
+  float left
+  width 80%
+input[name=hours]
+  float left
+  width 20%
