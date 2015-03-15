@@ -1,10 +1,10 @@
 .aspect
-  width 60%
+  width 70%
   margin 0 auto
   &:before
     content ""
     display block
-    padding-top 18%
+    padding-top 20%
   .clock
     position absolute
     top 0
@@ -16,16 +16,14 @@
       height 100%
       float left
       margin-right calc( 14.285% / 3 )
-      overflow hidden
       &:nth-child(2n+2)
         margin-right calc( (14.285% / 3) + ( (14.285% / 3) / 2 ) )
         &:after, &:before
           content ''
           position absolute
-          width 22%
-          height 11%
-          background orange
-          border-radius 100% 100%
+          width 5px
+          height 5px
+          background #272e38
         &:after
           left calc( 100% + ( 33.333% / 2 ) )
           top 25%
@@ -38,6 +36,7 @@
           display none
 
 .testbar
+  background black
   position absolute
   transition opacity 0.25s ease-in-out
   background #272e38
@@ -45,119 +44,118 @@
   &:before, &:after
     content ''
     position absolute
-    border 20px solid transparent
+    border 5px solid transparent
 
   &:nth-child(1) //TOP LEFT
-    width 10%
+    width 5px
     left 0px
-    top 10%
-    height calc( 50% - 18% )
+    top 6px
+    height calc( 50% - 12px )
     &:before
       right 0px
-      top -20px
-      border-width 0 20px 20px 0
+      top -5px
+      border-width 0 5px 5px 0
       border-bottom-color inherit
     &:after
       right 0px
-      bottom -20px
-      border-width 20px 20px 0 0
+      bottom -5px
+      border-width 5px 5px 0 0
       border-top-color inherit
 
   &:nth-child(2) // TOP
-    left 13%
-    top 0px
-    width 74%
-    height 7%
+    left 6px
+    width calc( 100% - 12px )
+    height 5px
     &:before
-      left -20px
-      bottom 0px
-      border-top 20px solid black
-      border-left 20px solid transparent
-      border-width 20px 0 0 20px
+      left -5px
+      top 0px
+      border-top 5px solid black
+      border-left 5px solid transparent
+      border-width 5px 0 0 5px
       border-top-color inherit
     &:after
-      right -20px
-      bottom 0px
-      border-width 20px 20px 0 0
+      right -5px
+      top 0px
+      border-width 5px 5px 0 0
       border-top-color inherit
 
   &:nth-child(3) // TOP RIGHT
-    width 10%
+    width 5px
     right 0px
-    top 10%
-    height calc( 50% - 18% )
+    top 6px
+    height calc( 50% - 12px )
     &:before
       left 0px
-      top -20px
-      border-width 0 0 20px 20px
+      top -5px
+      border-width 0 0 5px 5px
       border-bottom-color inherit
     &:after
       left 0px
-      bottom -20px
-      border-width 20px 0 0 20px
+      bottom -5px
+      border-width 5px 0 0 5px
       border-top-color inherit
 
   &:nth-child(4) // MIDDLE
-    left 12.5%
-    width 75%
-    top calc( 50% - 4.5% )
-    height 9%
+    left 4px
+    width calc( 100% - 8px )
+    top calc( 50% - 3px )
+    height 6px
     &:before
-      display none
-      left -20px
+      left -6px
       top 0px
-      border-width 5px 5px 5px 5px
+      border-width 3px 3px 3px 3px
       border-right-color inherit
     &:after
-      display none
-      right -20px
+      right -6px
       top 0px
-      border-width 5px 5px 5px 5px
+      border-width 3px 3px 3px 3px
       border-left-color inherit
+
   &:nth-child(5) //BOTTOM LEFT
-    width 10%
+    width 5px
     left 0px
-    bottom 10%
-    height calc( 50% - 18% )
+    top calc( 50% + 6px )
+    height calc( 50% - 12px )
     &:before
       right 0px
-      top -20px
-      border-width 0 20px 20px 0
+      top -5px
+      border-width 0 5px 5px 0
       border-bottom-color inherit
     &:after
       right 0px
-      bottom -20px
-      border-width 20px 20px 0 0
+      bottom -5px
+      border-width 5px 5px 0 0
       border-top-color inherit
 
   &:nth-child(6) // BOTTOM
-    left 13%
-    width 74%
+    left 6px
+    width calc( 100% - 12px )
     bottom 0px
-    height 7%
+    height 5px
     &:before
-      left -20px
+      left -5px
       top 0px
-      border-width 0 0 20px 20px
+      border-width 0 0 5px 5px
       border-bottom-color inherit
     &:after
-      right -20px
+      right -5px
       top 0px
-      border-width 0 20px 20px 0
+      border-width 0 5px 5px 0
       border-bottom-color inherit
 
   &:nth-child(7) // BOTTOM RIGHT
-    width 10%
+    width 5px
     right 0px
-    bottom 10%
-    height calc( 50% - 18% )
+    top calc( 50% + 6px )
+    height calc( 50% - 12px )
     &:before
       left 0px
-      top -20px
-      border-width 0 0 20px 20px
+      top -5px
+      border-width 0 0 5px 5px
       border-bottom-color inherit
     &:after
       left 0px
-      bottom -20px
-      border-width 20px 0 0 20px
+      bottom -5px
+      border-width 5px 0 0 5px
       border-top-color inherit
+

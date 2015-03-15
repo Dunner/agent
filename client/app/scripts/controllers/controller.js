@@ -80,7 +80,7 @@ angular.module('postApp')
     $scope.addTask = function() {
       if ($scope.form.task.length > 2) {
         var newtask = { hours: $scope.form.hours, task: $scope.form.task };
-        Calendar.addTask($scope.year, $scope.currentmonth + 1, $scope.day, newtask,
+        Calendar.addTask($scope.year, $scope.currentmonth + 1, $scope.currentday, newtask,
         function() {
           $scope.form = {task: '', hours: 1};
         });
@@ -91,7 +91,8 @@ angular.module('postApp')
 
     // delete task
     $scope.deleteTask = function(task) {
-      Calendar.removeTask($scope.year, $scope.currentmonth + 1, $scope.day, task._id,
+      console.log($scope.year,$scope.currentmonth+1,$scope.currentday);
+      Calendar.removeTask($scope.year, $scope.currentmonth+1, $scope.currentday, task._id,
       function(cb) {
         if (cb) {
           console.log(cb);

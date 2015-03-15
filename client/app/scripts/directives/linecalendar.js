@@ -32,6 +32,7 @@ angular.module('postApp')
         if (!day) {day = 1;}
         if (transition === 'specific') {
           $scope.currentmonth = month - 1;
+          Calendar.getMonth(year,month);
         }
         if (transition === 'next') {
           if ($scope.currentmonth < $scope.months.length - 1) {
@@ -39,6 +40,7 @@ angular.module('postApp')
           } else {
             $scope.currentmonth = 0;
           }
+          Calendar.getMonth(year,$scope.currentmonth+1);
         }
         if (transition === 'previous') {
           if ($scope.currentmonth > 0) {
@@ -46,14 +48,15 @@ angular.module('postApp')
           } else {
             $scope.currentmonth = $scope.months.length - 1;
           }
+          Calendar.getMonth(year,$scope.currentmonth - 1);
         }
+        // Scroll
         $timeout(function(){
           scroll.scrollToX(monthscroll, monthcontainer[0].children[$scope.currentmonth], 0, scrollspeed, function(){
             $scope.getDay(day, 'specific');
           });
           dayGrid();
         },250);
-        Calendar.getMonth(year,month);
         $scope.mode = 'months';
         //Create days
         $scope.daysinmonth = new Date($scope.year, $scope.currentmonth+1, 0).getDate();

@@ -12,7 +12,7 @@ angular.module('postApp')
   .directive('ngClock', function($timeout) {
      var ctrl = function($scope, $element, $attributes) {
       var numberFills = {
-        0: [0,1,2,3,5,6],
+        0: [0,1,2,4,5,6],
         1: [2,6],
         2: [1,2,3,4,5],
         3: [1,2,3,6,5],

@@ -86,7 +86,11 @@
                                             </div>
                                             <div class="month-label">
                                                 <div class="valign">
-                                                    <div class="middle cursor" ng-click="switchMonth()">{{month.name}}</div>
+                                                    <div class="middle">
+                                                        <div class="cursor" style="display:inline-block" ng-click="switchMonth()">
+                                                            {{month.name}}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="cursor month-next" ng-click="getMonth(year, currentmonth + 1, 'next')" ng-show="month === months[currentmonth]">
@@ -126,7 +130,11 @@
                                             <div class="month-label">
                                                 <!-- <div class="task-percent" ng-style="taskPercent(calendar.year[year][currentmonth+1][{{$index+1}}].length)"></div> -->
                                                 <div class="valign">
-                                                    <div class="middle cursor" ng-click="switchDay()">{{$index+1}}</div>
+                                                    <div class="middle">
+                                                        <div class="cursor" style="display:inline-block" ng-click="switchDay()">
+                                                            {{$index+1}}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="cursor month-next" ng-click="getDay(currentday+1, 'next')"  ng-show="$index+1 === currentday">
@@ -155,7 +163,7 @@
                                     </li>
                                     <li class="task" ng-repeat="task in calendar.year[year][currentmonth+1][currentday]">
                                         {{task.task}} hours: {{task.hours}}
-                                        <div class="remove" ng-click="deleteTask(task,$index)"></div>
+                                        <div class="remove" ng-click="deleteTask(task)"></div>
                                     </li>
                                 </ul>
                             </div>
