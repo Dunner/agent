@@ -31,32 +31,35 @@
                 <div class="screencontent">
                     <div class="side-top">
                         <div class="top-today">
-                            <div class="weekdays">
-                                <nav class="inline">
-                                    <ul>
-                                        <li ng-repeat="day in rotatedweek"
-                                            class="cursor"
-                                            ng-class="{'active': day === weekdays[today.weekday]}"
-                                            ng-click="getMonth(today.year, today.month, 'specific', today.day+ ($index-3) );">
-                                            <p>{{day.substring(0,3)}}</p>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
 
-                            <div class="clockgrid">
-                                <div class="valign">
-                                    <div class="middle">
+                            <nav class="inline">
+                                <ul>
+                                    <li class="cursor" ng-click="toToday()">
+                                        <span class="dateinfo-weekday">
+                                            {{weekdays[today.weekday].substring(0,3)}}
+                                        </span>
+                                        <br>
+                                        <span class="dateinfo-month">
+                                            {{months[today.month-1].name.substring(0,3)}}
+                                        </span>
+                                        <span class="dateinfo-day">
+                                            {{today.day}}
+                                        </span>
+                                    </li>
+                                    <li class="thetime">
                                         <div class="aspect">
-                                            <ng-clock class="clock" hour="{{hour}}" minute="{{minute}}" second="{{second}}">
-                                                <div class="cells" ng-repeat="1 in [1,2,3,4,5,6]">
+                                            <ng-clock class="clock" hour="{{hour}}" minute="{{minute}}">
+                                                <div class="cells" ng-repeat="1 in [1,2,3,4]">
                                                     <div class="testbar" ng-repeat="1 in [1,2,3,4,5,6,7]"></div>
                                                 </div>
                                             </ng-clock>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    </li>
+                                    <li>
+                                    </li>
+                                </ul>
+                            </nav>
+
                         </div>
                     </div>
                     <div class="side-middle">
@@ -121,6 +124,8 @@
                             <div class="dayline-select" id="day-line" ng-show="selectDayType === 'line'">
                                 <nav class="inline calendar" >
                                     <ul id="days">
+
+                                        <!-- DAYS -->
                                         <li ng-repeat="day in days" ng-swipe-right="getDay(currentday-1, 'previous')" ng-swipe-left="getDay(currentday+1, 'next')">
                                             <div class="cursor month-previous" ng-click="getDay(currentday-1, 'previous')" ng-show="$index+1 === currentday">
                                                 <svg class="arrow arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 306" >

@@ -1,10 +1,11 @@
 .aspect
-  width 70%
+  width 100%
   margin 0 auto
   &:before
     content ""
     display block
-    padding-top 20%
+    padding-top 33.33%
+    //padding-top 20%
   .clock
     position absolute
     top 0
@@ -12,18 +13,19 @@
     bottom 0
     right 0
     .cells
-      width calc( 14.285% - ( 14.285% / 6 ) ) !important
+      // transform skewX(10deg)
+      width calc( 25% - ( 25% / 3.333 ) ) !important
       height 100%
       float left
-      margin-right calc( 14.285% / 3 )
+      margin-right calc( 25% / 3 )
       &:nth-child(2n+2)
-        margin-right calc( (14.285% / 3) + ( (14.285% / 3) / 2 ) )
+        margin-right calc( (25% / 3) + ( (25% / 3) / 2 ) )
         &:after, &:before
           content ''
           position absolute
           width 5px
           height 5px
-          background #272e38
+          background #444
         &:after
           left calc( 100% + ( 33.333% / 2 ) )
           top 25%
@@ -39,8 +41,8 @@
   background black
   position absolute
   transition opacity 0.25s ease-in-out
-  background #272e38
-  border-color #272e38
+  background #444
+  border-color #444
   &:before, &:after
     content ''
     position absolute
@@ -69,8 +71,6 @@
     &:before
       left -5px
       top 0px
-      border-top 5px solid black
-      border-left 5px solid transparent
       border-width 5px 0 0 5px
       border-top-color inherit
     &:after
