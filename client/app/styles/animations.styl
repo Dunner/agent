@@ -3,23 +3,26 @@
   opacity 0
   pointer-events none
 
+.calendar.ng-hide
+  height 0!important
+  display block!important
+
 .month-previous.ng-hide, .month-next.ng-hide, .day-select.ng-hide,
   opacity 0
   display block!important
 
+.datepicker.ng-hide
+  height 0 !important
+  display block!important
+
 .dayline-select.ng-hide
-  opacity 0 !important
-  height 100% !important
+  height 0 !important
   display block!important
 .dayline-select
   transition opacity 0.3s 0.5s ease-in-out, height 0.5s 0.3s ease-in-out
 
 .daygrid-select.ng-hide
-  opacity 0 !important
-  height calc( 100% / 7 ) !important
-  position absolute !important
-  top calc( 100% / 7 ) !important
-  z-index 0 !important
+  height 0 !important
   display block!important
   & .expand
     height 100% !important
@@ -30,6 +33,9 @@
   width 0px
   opacity 0
   display block!important
+
+.calendar
+  transition height 0.3s ease-in-out
 
 .month-previous, .month-next
   opacity 1

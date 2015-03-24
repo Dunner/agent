@@ -55,7 +55,12 @@
                                             </ng-clock>
                                         </div>
                                     </li>
-                                    <li>
+                                    <li class="buttons">
+                                        <div class="datepicker">
+                                            <div class="button" ng-click="pickDate()">
+                                            pick
+                                            </div>
+                                        </div>
                                     </li>
                                 </ul>
                             </nav>
@@ -63,122 +68,33 @@
                         </div>
                     </div>
                     <div class="side-middle">
-                        <ng-line-calendar>
-                            <!-- Month list -->
-                            <div class="month-list ng-hide" id="month-list" ng-show="selectMonthType === 'list'" >
-                                <ul>
-                                    <li ng-repeat="month in months">
-                                        <div class="valign">
-                                            <div class="middle cursor"
-                                                 ng-click="getMonth(year, month.id, 'specific'); switchMonth()">
-                                                 {{month.name}}
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- Month line -->
-                            <div class="month-line" id="month-line" ng-show="selectMonthType === 'line'">
-                                <nav class="inline calendar" >
-                                    <ul id="months">
-                                        <li ng-repeat="month in months" ng-swipe-left="getMonth(year, currentmonth + 1, 'next')" ng-swipe-right="getMonth(year, currentmonth + 1, 'previous')">
-                                            <div class="cursor month-previous" ng-click="getMonth(year, currentmonth + 1, 'previous')" ng-show="month === months[currentmonth]">
-                                                <svg class="arrow arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 306" >
-                                                    <g><polygon points="94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153"/></g>
-                                                </svg>
-                                            </div>
-                                            <div class="month-label">
-                                                <div class="valign">
-                                                    <div class="middle">
-                                                        <div class="cursor" style="display:inline-block" ng-click="switchMonth()">
-                                                            {{month.name}}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="cursor month-next" ng-click="getMonth(year, currentmonth + 1, 'next')" ng-show="month === months[currentmonth]">
-                                                <svg class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 306" >
-                                                    <g><polygon points="94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153"/></g>
-                                                </svg>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                            <!-- Day grid -->
-                            <div class="daygrid-select ng-hide" id="days-grid" ng-show="selectDayType === 'grid'" ng-swipe-left="getMonth(year, currentmonth + 1, 'next')" ng-swipe-right="getMonth(year, currentmonth + 1, 'previous')">
-                                <ul>
-                                    <li ng-repeat="day in calendar.year[year][currentmonth+1]"
-                                        ng-click="getDay($index+1, 'specific'); dayExpand($index+1); switchDay();"
-                                        ng-class="{expand: activeday == $index+1, active: currentday == $index+1}"
-                                        class="cursor"
-                                        data-id="{{$index+1}}">
-                                        <div class="task-percent" ng-style="taskPercent(calendar.year[year][currentmonth+1][{{$index+1}}].length)"></div>
-                                        <div class="valign">
-                                            <div class="middle">{{$index+1}}</div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- Day line -->
-                            <div class="dayline-select" id="day-line" ng-show="selectDayType === 'line'">
-                                <nav class="inline calendar" >
-                                    <ul id="days">
+                        <!-- Calendar -->
+                        <div ng-line-calendar ng-show="datepick" class="calendar ng-hide"></div>
+                        <!-- Tasks -->
+                        <div class="tasks" id="tasks" ng-swipe-right="getDay(currentday-1, 'previous')" ng-swipe-left="getDay(currentday+1, 'next')">
+                            <p>day: {{weekday}} {{currentday}}</p>
+                            <ul>
+                                <li class="cursor task" ng-init="add = false">
+                                    <p ng-show="!add" ng-click="add = true">+ Add</p>
+                                    <form class="post-form" ng-submit="addTask()" ng-show="add">
+                                        <input name="task" type="text" placeholder="task" ng-model="form.task" autofocus="" />
+                                        <input name="hours" type="number" placeholder="1" ng-model="form.hours" autofocus="" />
 
-                                        <!-- DAYS -->
-                                        <li ng-repeat="day in days" ng-swipe-right="getDay(currentday-1, 'previous')" ng-swipe-left="getDay(currentday+1, 'next')">
-                                            <div class="cursor month-previous" ng-click="getDay(currentday-1, 'previous')" ng-show="$index+1 === currentday">
-                                                <svg class="arrow arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 306" >
-                                                    <g><polygon points="94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153"/></g>
-                                                </svg>
-                                            </div>
-                                            <div class="month-label">
-                                                <!-- <div class="task-percent" ng-style="taskPercent(calendar.year[year][currentmonth+1][{{$index+1}}].length)"></div> -->
-                                                <div class="valign">
-                                                    <div class="middle">
-                                                        <div class="cursor" style="display:inline-block" ng-click="switchDay()">
-                                                            {{$index+1}}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="cursor month-next" ng-click="getDay(currentday+1, 'next')"  ng-show="$index+1 === currentday">
-                                                <svg class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 306" >
-                                                    <g><polygon points="94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153"/></g>
-                                                </svg>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                            <!-- Tasks -->
-                            <div class="tasks" id="tasks" ng-swipe-right="getDay(currentday-1, 'previous')" ng-swipe-left="getDay(currentday+1, 'next')">
-                                <p>day: {{weekday}} {{currentday}}</p>
-                                <ul>
-                                    <li class="cursor task" ng-init="add = false">
-                                        <p ng-show="!add" ng-click="add = true">+ Add</p>
-                                        <form class="post-form" ng-submit="addTask()" ng-show="add">
-                                            <input name="task" type="text" placeholder="task" ng-model="form.task" autofocus="" />
-                                            <input name="hours" type="number" placeholder="1" ng-model="form.hours" autofocus="" />
-
-                                            <button type="submit" class="button button-ok" ng-click="add=false">Post</button>
-                                            <div class="button button-cancel" ng-click="add=false">Cancel</div>
-                                            <div style="clear:both"></div>
-                                        </form>
-                                    </li>
-                                    <li class="task" ng-repeat="task in calendar.year[year][currentmonth+1][currentday]">
-                                        {{task.task}} hours: {{task.hours}}
-                                        <div class="remove" ng-click="deleteTask(task)"></div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </ng-line-calendar>
-                    </div>
-                    <!--
-                    <div class="side-bottom">
-                        <div class="left-info">
+                                        <button type="submit" class="button button-ok" ng-click="add=false">Post</button>
+                                        <div class="button button-cancel" ng-click="add=false">Cancel</div>
+                                        <div style="clear:both"></div>
+                                    </form>
+                                </li>
+                                <li class="task" ng-repeat="task in calendar.year[year][currentmonth+1][currentday]">
+                                    {{task.task}} hours: {{task.hours}}
+                                    <div class="remove" ng-click="deleteTask(task)"></div>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="right-buttons">
+                    </div>
+
+                    <div class="side-bottom separator-top">
+                        <nav class="inline">
                             <ul>
                                 <li>
                                     <div class="cursor icon">
@@ -195,13 +111,17 @@
                                     </div>
                                 </li>
                             </ul>
-                        </div>
+                        </nav>
                     </div>
-                    -->
+
                 </div>
             </div>
         </div>
     </ng-device>
+    <!-- Fullscreen -->
+    <script>
+window.scrollTo(0, 1);
+    </script>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>

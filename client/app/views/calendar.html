@@ -1,0 +1,87 @@
+<!-- Month list -->
+<div class="month-list ng-hide" id="month-list" ng-show="selectMonthType === 'list'" >
+    <ul>
+        <li ng-repeat="month in months">
+            <div class="valign">
+                <div class="middle cursor"
+                     ng-click="getMonth(year, month.id, 'specific'); switchMonth()">
+                     {{month.name}}
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<!-- Month line -->
+<div class="month-line" id="month-line" ng-show="selectMonthType === 'line'">
+    <nav class="inline calendar" >
+        <ul id="months">
+            <li ng-repeat="month in months" ng-swipe-left="getMonth(year, currentmonth + 1, 'next')" ng-swipe-right="getMonth(year, currentmonth + 1, 'previous')">
+                <div class="cursor month-previous" ng-click="getMonth(year, currentmonth + 1, 'previous')" ng-show="month === months[currentmonth]">
+                    <svg class="arrow arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 306" >
+                        <g><polygon points="94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153"/></g>
+                    </svg>
+                </div>
+                <div class="month-label">
+                    <div class="valign">
+                        <div class="middle">
+                            <div class="cursor" style="display:inline-block" ng-click="switchMonth()">
+                                {{month.name}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cursor month-next" ng-click="getMonth(year, currentmonth + 1, 'next')" ng-show="month === months[currentmonth]">
+                    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 306" >
+                        <g><polygon points="94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153"/></g>
+                    </svg>
+                </div>
+            </li>
+        </ul>
+    </nav>
+</div>
+<!-- Day grid -->
+<div class="daygrid-select ng-hide" id="days-grid" ng-show="selectDayType === 'grid'" ng-swipe-left="getMonth(year, currentmonth + 1, 'next')" ng-swipe-right="getMonth(year, currentmonth + 1, 'previous')">
+    <ul>
+        <li ng-repeat="day in calendar.year[year][currentmonth+1]"
+            ng-click="getDay($index+1, 'specific'); switchDay();"
+            ng-class="{expand: activeday == $index+1, active: currentday == $index+1}"
+            class="cursor"
+            data-id="{{$index+1}}">
+            <div class="task-percent" ng-style="taskPercent(calendar.year[year][currentmonth+1][{{$index+1}}].length)"></div>
+            <div class="valign">
+                <div class="middle">{{$index+1}}</div>
+            </div>
+        </li>
+    </ul>
+</div>
+<!-- Day line -->
+<div class="dayline-select" id="day-line" ng-show="selectDayType === 'line'">
+    <nav class="inline calendar" >
+        <ul id="days">
+
+            <!-- DAYS -->
+            <li ng-repeat="day in days" ng-swipe-right="getDay(currentday-1, 'previous')" ng-swipe-left="getDay(currentday+1, 'next')">
+                <div class="cursor month-previous" ng-click="getDay(currentday-1, 'previous')" ng-show="$index+1 === currentday">
+                    <svg class="arrow arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 306" >
+                        <g><polygon points="94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153"/></g>
+                    </svg>
+                </div>
+                <div class="month-label">
+                    <!-- <div class="task-percent" ng-style="taskPercent(calendar.year[year][currentmonth+1][{{$index+1}}].length)"></div> -->
+                    <div class="valign">
+                        <div class="middle">
+                            <div class="cursor" style="display:inline-block" ng-click="switchDay()">
+                                {{$index+1}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cursor month-next" ng-click="getDay(currentday+1, 'next')"  ng-show="$index+1 === currentday">
+                    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 306" >
+                        <g><polygon points="94.35,0 58.65,35.7 175.95,153 58.65,270.3 94.35,306 247.35,153"/></g>
+                    </svg>
+                </div>
+            </li>
+        </ul>
+    </nav>
+</div>

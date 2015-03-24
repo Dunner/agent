@@ -41,25 +41,8 @@ angular.module('postApp')
       {'id': 11, 'name': 'November'},
       {'id': 12, 'name': 'December'}
     ];
+    $scope.datepick = false;
 
-    $scope.selectTypes = ['grid', 'line', 'list'];
-    $scope.selectDayType = $scope.selectTypes[1];
-    $scope.switchDay = function() {
-      if ($scope.selectDayType === $scope.selectTypes[0]) {
-        $scope.selectDayType = $scope.selectTypes[1];
-      }else{
-        $scope.selectDayType = $scope.selectTypes[0];
-        $scope.activeday = 0;
-      }
-    };
-    $scope.selectMonthType = $scope.selectTypes[1];
-    $scope.switchMonth = function() {
-      if ($scope.selectMonthType === $scope.selectTypes[2]) {
-        $scope.selectMonthType = $scope.selectTypes[1];
-      }else{
-        $scope.selectMonthType = $scope.selectTypes[2];
-      }
-    };
     $scope.taskPercent = function(length) {
       if (length !== 0 && length !== 24) {
         length = Math.round(length/24*100)+'%';
@@ -75,7 +58,6 @@ angular.module('postApp')
       var d = new Date(year+'-'+month+'-'+day);
       return $scope.weekdays[d.getDay()];
     };
-
 
     $scope.addTask = function() {
       if ($scope.form.task.length > 2) {
@@ -99,7 +81,6 @@ angular.module('postApp')
         }
       });
     };
-
 
     $scope.rotateWeek = function(day) {
       $scope.rotatedweek = $scope.weekdays;

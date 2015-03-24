@@ -10,21 +10,24 @@
 
 angular.module('postApp')
   .directive('ngLineCalendar', function(scroll, Calendar, $timeout) {
-    var ctrl = function($scope) {
+    var ctrl = function($scope, $element) {
 
-      var monthwrapper = angular.element(document.getElementById('month-line')),
-          monthscroll = document.getElementById('month-line'),
+      var toPlayWidth = $element[0].offsetParent.offsetHeight;
+      $element.css({'height': (toPlayWidth / 10) * 2 +'px'});
+      var children = $element.children();
+
+      var monthwrapper = angular.element(children[1]),
+          monthscroll = children[1],
           monthexpand = angular.element(monthwrapper.children(0)),
           monthwidth = monthwrapper[0].offsetWidth,
           monthcontainer = angular.element(document.getElementById('months'));
-
-      var daywrapper = angular.element(document.getElementById('day-line')),
-          dayscroll = document.getElementById('day-line'),
+      var daywrapper = angular.element(children[3]),
+          dayscroll = children[3],
           dayexpand = angular.element(daywrapper.children(0)),
           daywidth = daywrapper[0].offsetWidth,
           daycontainer = angular.element(document.getElementById('days'));
 
-      var scrollspeed = 1000;
+      var scrollspeed = 300;
 
       monthexpand.css({'width': (monthwidth * $scope.months.length) + 'px'});
 
@@ -55,7 +58,6 @@ angular.module('postApp')
           scroll.scrollToX(monthscroll, monthcontainer[0].children[$scope.currentmonth], 0, scrollspeed, function(){
             $scope.getDay(day, 'specific');
           });
-          dayGrid();
         },250);
         $scope.mode = 'months';
         //Create days
@@ -72,10 +74,6 @@ angular.module('postApp')
       $timeout(function(){
         $scope.toToday();
       },300);
-
-      $timeout(function(){
-        scrollspeed = 300;
-      },3000);
 
       // DAYS
 
@@ -94,6 +92,7 @@ angular.module('postApp')
         $scope.weekday = $scope.toWeek($scope.year, $scope.currentmonth+1, $scope.currentday);
         $timeout(function(){
           scroll.scrollToX(dayscroll, daycontainer[0].children[$scope.currentday-1], 0, scrollspeed);
+          dayGrid();
         },50);
       };
 
@@ -103,11 +102,11 @@ angular.module('postApp')
         var collapse = 0;
         var collapses = 0;
         var spacing = 5;
-        var container = angular.element(document.getElementById('days-grid'));
+        var container = angular.element(children[2]);
         var blockcontainer =angular.element(container.children(0));
         var blocks = blockcontainer[0].children;
-        var rawh = blockcontainer[0].offsetParent.offsetParent.offsetHeight - (blockcontainer[0].offsetParent.offsetParent.offsetHeight / 7);
-        var h = rawh- (spacing * (gridheight - 1)),
+        var rawh = ($element[0].offsetParent.offsetHeight / 10) * 8;
+        var h = rawh - (spacing * (gridheight - 1)),
             w = blockcontainer[0].offsetWidth - (spacing * (gridwidth - 1));
         var bh = h / gridheight, bw = (w / gridwidth);
         for (var i = 0; i < blocks.length; i++) {
@@ -125,36 +124,70 @@ angular.module('postApp')
           collapse++;
         }
       }
-
-      //Day grid popup
-      $scope.dayExpand = function(day) {
-        $scope.activeday = day;
-        $scope.mode = 'hours';
+      $scope.pickDate = function() {
+        $scope.datepick = !$scope.datepick;
+        scroll.scrollToX(monthscroll, monthcontainer[0].children[$scope.currentmonth], 0, 200);
+        scroll.scrollToX(dayscroll, daycontainer[0].children[$scope.currentday-1], 0, 200);
+        dayGrid();
       };
-
       //Scroll to today
       $scope.toToday = function(){
         $scope.getMonth($scope.year, $scope.today.month, 'specific', $scope.today.day);
       };
 
+      $scope.selectTypes = ['grid', 'line', 'list'];
+      $scope.selectDayType = $scope.selectTypes[0];
+      $scope.switchDay = function() {
+        if ($scope.selectDayType === $scope.selectTypes[0]) {
+          $scope.selectDayType = $scope.selectTypes[1];
+          switchMode(0);
+        }else{
+          $scope.selectDayType = $scope.selectTypes[0];
+          switchMode(1);
+          dayGrid();
+          $scope.activeday = 0;
+        }
+      };
+      $scope.selectMonthType = $scope.selectTypes[1];
+      $scope.switchMonth = function() {
+        if ($scope.selectMonthType === $scope.selectTypes[2]) {
+          $scope.selectMonthType = $scope.selectTypes[1];
+          switchMode(0);
+        }else{
+          $scope.selectMonthType = $scope.selectTypes[2];
+          switchMode(2);
+        }
+      };
+      function switchMode(mode) {
+        switch(mode) {
+          case 0:
+            //Standard
+            angular.element(children[1]).css({'height': '50%'});
+            angular.element(children[3]).css({'height': '50%'});
+            $element.css({'height': (toPlayWidth / 10) * 2 +'px'});
+            break;
+          case 1:
+            //Expand daygrid
+            angular.element(children[1]).css({'height': '20%'});
+            angular.element(children[2]).css({'height': '80%'});
+            $element.css({'height': toPlayWidth +'px'});
+            break;
+          case 2:
+            //Expand monthlist
+            angular.element(children[0]).css({'height': '100%'});
+            $element.css({'height': toPlayWidth +'px'});
+            break;
+          default:
+            break;
+        }
+      }
+      switchMode(1);
+
+
     };
     return {
       restrict: 'EA',
-      replace: true,
-      transclude: true,
       link: ctrl,
-      template: '<div class="full" ng-transclude></div>'
+      templateUrl: 'views/calendar.html'
     };
-
-      // $scope.changeMonth = function(month) {
-      //   scrollto = $scope.element[0].children[month];
-      //   scroll.scrollToX(monthscroll, scrollto, 0, 300);
-      //   $scope.currentmonth = month;
-      // };
-      // $scope.$watch(function () { return $element[0].offsetParent.scrollLeft; }, function (newValue, oldValue) {
-      //   if (newValue !== oldValue) {
-      //       // Do something ...
-      //       console.log(newValue, $element[0].children[0].children);
-      //   }
-      // });
   });
